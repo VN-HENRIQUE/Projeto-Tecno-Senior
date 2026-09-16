@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trilha de aprendizado — Tecno Sênior</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <a class="pular-link" href="#conteudo">Pular para o conteúdo</a>
+
+    <header>
+        <figure class="logo">
+            <img src="imagens/logo.png" alt="Logo do site">
+        </figure>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="trilha.html">Aprender</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
+        </nav>
+        <button id="botao-texto" class="botao-texto" type="button" aria-pressed="false">
+            Aumentar letra
+        </button>
+    </header>
+
+    <main id="conteudo">
+
+      <div id="pagina-inicio">
+        <section class="trilha" id="trilha" aria-labelledby="titulo-trilha">
+            <div class="trilha-cabecalho">
+                <h2 id="titulo-trilha">Sua trilha de aprendizado</h2>
+                <p>Siga os módulos na ordem, um de cada vez. Toque em um módulo para abrir a lição completa.</p>
+                <p class="trilha-progresso" id="trilha-progresso" role="status">0 de 5 módulos concluídos</p>
+            </div>
+
+            <div class="subsecoes">
+                <section class="subsecao" aria-labelledby="subsecao-modulos-titulo">
+                    <h3 id="subsecao-modulos-titulo">Módulos</h3>
+                    <ol class="caminho" id="caminho">
+                        <!-- Os módulos são preenchidos pelo script.js a partir de dadosModulos -->
+                    </ol>
+                </section>
+            </div>
+        </section>
+      </div>
+
+      <section class="pagina-modulo" id="pagina-modulo" tabindex="-1" hidden>
+          <a class="link-voltar" href="#trilha" id="botao-voltar-modulo">← Voltar para a trilha</a>
+
+          <div class="pagina-modulo-cabecalho">
+              <span class="pagina-modulo-marca" id="pm-numero">1</span>
+              <div>
+                  <h1 id="pm-titulo">Título do módulo</h1>
+                  <p class="pagina-modulo-descricao" id="pm-descricao">Descrição do módulo</p>
+              </div>
+          </div>
+
+          <p class="pagina-modulo-instrucao">Escolha um tema para aprender:</p>
+
+          <ol class="caminho" id="pm-caminho">
+              <!-- Os temas do módulo são preenchidos pelo script.js -->
+          </ol>
+      </section>
+
+      <section class="pagina-topico" id="pagina-topico" tabindex="-1" hidden>
+          <a class="link-voltar" href="#" id="botao-voltar-topico">← Voltar para o módulo</a>
+
+          <h1 id="pt-titulo">Título do tema</h1>
+
+          <p class="pagina-topico-descricao" id="pt-descricao">Descrição do tema</p>
+
+          <div class="pagina-topico-corpo" id="pt-corpo">
+              <!-- Texto detalhado do tema preenchido pelo script.js -->
+          </div>
+
+          <div class="pagina-topico-acoes">
+              <button class="botao-concluir" id="pt-concluir" type="button">Marcar como concluído</button>
+              <a class="link-proximo" id="pt-proximo" href="#">Próximo tema →</a>
+          </div>
+      </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Tecno Sênior. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="dados.js"></script>
+    <script src="letra.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
