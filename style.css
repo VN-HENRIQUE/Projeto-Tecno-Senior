@@ -314,6 +314,7 @@ nav a:hover {
 }
 
 .mini-barra-progresso-preenchimento {
+  display: block;
   height: 100%;
   width: 0%;
   background: linear-gradient(90deg, var(--teal) 0%, var(--gold) 100%);

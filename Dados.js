@@ -333,23 +333,28 @@
       descricao: "Banco, farmácia e transporte pelo celular",
       temas: [
       {
-        titulo: "Encontrando os Ícones",
-        descricao: "Onde ficam os aplicativos na tela",
+        titulo: "Aplicativo do banco",
+        descricao: "Usando o banco pelo celular com segurança",
         paragrafos: [
-          "Os ícones são os pequenos desenhos que aparecem na tela do celular. Cada ícone representa um aplicativo ou uma função do aparelho.\nPor exemplo, o ícone do WhatsApp representa o aplicativo usado para enviar mensagens, enquanto o ícone de uma câmera abre a câmera do celular.",
-          "📱 Onde ficam os ícones?\nQuando você desbloqueia o celular, normalmente aparece a tela inicial. Nela, você encontrará vários ícones organizados pela tela.\nAlguns aplicativos podem estar diretamente na tela inicial. Outros podem estar em uma lista com todos os aplicativos instalados.",
-          "👆 Como abrir um aplicativo?\nPara abrir um aplicativo, primeiro encontre o ícone que deseja usar. Depois:\n1. Procure o desenho do aplicativo na tela.\n2. Toque uma vez sobre o ícone.\n3. Aguarde alguns instantes.\n4. O aplicativo será aberto.\nPor exemplo, para abrir o WhatsApp, procure o ícone do WhatsApp e toque uma vez sobre ele.",
-          "🔎 E se eu não encontrar o aplicativo?\nNão se preocupe. O aplicativo pode estar em outra tela.\nVocê pode arrastar o dedo para a esquerda ou para a direita para mudar de tela e procurar o ícone.\nTambém é possível abrir a lista de aplicativos do celular. Em muitos aparelhos, basta arrastar o dedo de baixo para cima na tela inicial.",
-          "💡 Dica: Não precisa decorar onde cada aplicativo está. Com o tempo, você vai começar a reconhecer os ícones e saber onde encontrá-los.",
-          "🧠 Lembre-se\nÍcone = desenho que representa um aplicativo ou função. Por exemplo:",
-          "💬 WhatsApp: mensagens e chamadas.",
-          "📷 Câmera: tirar fotos e gravar vídeos.",
-          "☎️ Telefone: fazer ligações.",
-          "⚙️ Configurações: alterar as opções do celular.",
-          "🌐 Internet: acessar sites e páginas da internet.",
+          "Acessar o banco pelo celular traz muita praticidade para consultar saldos, pagar contas e fazer transferências sem precisar sair de casa. Acompanhe o passo a passo para usar os recursos bancários com facilidade e proteção!",
+          "1.Baixe o aplicativo oficial do seu banco 📲:",
+          "Abra a loja de aplicativos do celular (Google Play Store no Android ou App Store no iPhone), digite o nome exato do seu banco e verifique se o desenvolvedor é o próprio banco antes de tocar em Baixar ou Instalar.",
+          "2.Cadastre sua senha de acesso e biometria 🔐:",
+          "Na primeira vez que abrir o aplicativo, siga as orientações para cadastrar sua conta. Se o seu celular tiver leitor de digitais ou reconhecimento facial, ative a biometria: isso permite entrar no aplicativo de forma mais rápida e segura.",
+          "3.Consulte saldos e extratos de forma simples 👁️:",
+          "Na tela principal do aplicativo, toque no ícone do olho (ou na opção \"Mostrar saldo\") para ver quanto dinheiro há na conta. Deslize a tela para baixo para visualizar o extrato com todas as suas movimentações recentes.",
+          "4.Faça pagamentos de boletos com a câmera 📷:",
+          "Para pagar uma conta de água, luz ou boleto, vá na opção Pagar e escolha Ler código de barras. Aponte a câmera do celular para o código de barras impresso na conta e confirme o valor na tela antes de digitar sua senha.",
+          "5.Saia do aplicativo ao terminar 🚪:",
+          "Quando concluir o que precisava fazer, nunca feche a tela de uma vez. Procure o botão Sair (ou o ícone de uma porta/cadeado) para encerrar sua sessão bancária com total segurança.",
+          "Dicas de Ouro para a sua Segurança ⭐",
+          "Não anote senhas no celular 🚫: Nunca salve suas senhas bancárias em notas do celular, no WhatsApp ou na capinha do aparelho.",
+          "Nunca use o aplicativo em redes Wi-Fi públicas 📶: Acesse o banco usando a sua rede de internet móvel (4G/5G) ou o Wi-Fi da sua própria casa. Redes de praças, shoppings ou ônibus podem ser inseguras.",
+          "Cuidado com quem olha sua tela 👀: Ao digitar senhas em locais públicos ou no transporte, incline o aparelho de forma que outras pessoas ao lado não consigam ver os números digitados.",
+          "Usar o aplicativo do banco é simples e seguro quando você mantém suas senhas protegidas e cuida do seu aparelho! 🛡️",
         ],
       },
-      {
+      { 
         titulo: "Consultas e remédios",
         descricao: "Marcando consulta ou pedindo remédio",
         paragrafos: [
@@ -418,4 +423,3 @@
     ],
   },
 ];
- b39a07d (audio, barra)
