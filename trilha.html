@@ -36,6 +36,10 @@
                 <h2 id="titulo-trilha">Sua trilha de aprendizado</h2>
                 <p>Siga os módulos na ordem, um de cada vez. Toque em um módulo para abrir a lição completa.</p>
                 <p class="trilha-progresso" id="trilha-progresso" role="status">0 de 5 módulos concluídos</p>
+
+                <div class="barra-progresso" role="progressbar" aria-labelledby="trilha-progresso" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="barra-progresso">
+                    <div class="barra-progresso-preenchimento" id="barra-progresso-preenchimento"></div>
+                </div>
             </div>
 
             <div class="subsecoes">
@@ -62,6 +66,11 @@
 
           <p class="pagina-modulo-instrucao">Escolha um tema para aprender:</p>
 
+            <p class="pagina-modulo-progresso" id="pm-progresso" role="status">0 de 4 temas concluídos</p>
+            <div class="barra-progresso" role="progressbar" aria-labelledby="pm-progresso" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="pm-barra-progresso">
+                <div class="barra-progresso-preenchimento" id="pm-barra-progresso-preenchimento"></div>
+            </div>
+
           <ol class="caminho" id="pm-caminho">
               <!-- Os temas do módulo são preenchidos pelo script.js -->
           </ol>
@@ -74,9 +83,14 @@
 
           <p class="pagina-topico-descricao" id="pt-descricao">Descrição do tema</p>
 
-          <div class="pagina-topico-corpo" id="pt-corpo">
-              <!-- Texto detalhado do tema preenchido pelo script.js -->
+          <div class="leitura-controles" id="leitura-controles">
+            <button class="botao-ouvir" id="botao-ouvir" type="button" aria-pressed="false">🔊 Ouvir este texto</button>
+            <button class="botao-parar-leitura" id="botao-parar-leitura" type="button" hidden>⏹️ Parar leitura</button>
           </div>
+
+            <div class="pagina-topico-corpo" id="pt-corpo">
+                <!-- Texto detalhado do tema preenchido pelo script.js -->
+            </div>
 
           <div class="pagina-topico-acoes">
               <button class="botao-concluir" id="pt-concluir" type="button">Marcar como concluído</button>

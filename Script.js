@@ -21,6 +21,9 @@ const ptCorpo = document.getElementById("pt-corpo");
 const ptConcluir = document.getElementById("pt-concluir");
 const ptProximo = document.getElementById("pt-proximo");
 const botaoVoltarTopico = document.getElementById("botao-voltar-topico");
+const botaoOuvir = document.getElementById("botao-ouvir");
+const botaoPararLeitura = document.getElementById("botao-parar-leitura");
+let lendoAgora = false;
 
 const TITULO_SITE = document.title;
 
@@ -66,7 +69,28 @@ function alternarTemaConcluido(numeroModulo, indiceTema) {
 
 function atualizarProgresso() {
   const totalConcluidos = dadosModulos.filter(moduloConcluido).length;
+  const porcentagem = Math.round((totalConcluidos / dadosModulos.length) * 100);
+
   progressoEl.textContent = `${totalConcluidos} de ${dadosModulos.length} módulos concluídos`;
+
+  const barraPreenchimento = document.getElementById("barra-progresso-preenchimento");
+  const barra = document.getElementById("barra-progresso");
+  if (barraPreenchimento) barraPreenchimento.style.width = `${porcentagem}%`;
+  if (barra) barra.setAttribute("aria-valuenow", porcentagem);
+}
+
+function atualizarProgressoDoModulo(modulo) {
+  const totalTemas = modulo.temas.length;
+  const temasConcluidos = modulo.temas.filter((_, indice) => temaConcluido(modulo.numero, indice)).length;
+  const porcentagem = Math.round((temasConcluidos / totalTemas) * 100);
+
+  const pmProgresso = document.getElementById("pm-progresso");
+  const pmBarraPreenchimento = document.getElementById("pm-barra-progresso-preenchimento");
+  const pmBarra = document.getElementById("pm-barra-progresso");
+
+  if (pmProgresso) pmProgresso.textContent = `${temasConcluidos} de ${totalTemas} temas concluídos`;
+  if (pmBarraPreenchimento) pmBarraPreenchimento.style.width = `${porcentagem}%`;
+  if (pmBarra) pmBarra.setAttribute("aria-valuenow", porcentagem);
 }
 
 // ===== Página inicial: monta a trilha com os módulos =====
@@ -80,6 +104,10 @@ function montarTrilha() {
     const concluido = moduloConcluido(modulo);
     const ehAtual = indice === indiceAtual;
 
+    const totalTemas = modulo.temas.length;
+    const temasConcluidos = modulo.temas.filter((_, i) => temaConcluido(modulo.numero, i)).length;
+    const porcentagemModulo = Math.round((temasConcluidos / totalTemas) * 100);
+
     li.innerHTML = `
       <button class="modulo-botao" data-abrir-modulo="${modulo.numero}">
         ${ehAtual ? '<span class="modulo-badge">Continue aqui</span>' : ""}
@@ -87,6 +115,9 @@ function montarTrilha() {
         <span class="modulo-texto">
           <span class="modulo-titulo">${modulo.titulo}</span>
           <span class="modulo-descricao">${modulo.descricao}</span>
+          <span class="mini-barra-progresso" role="progressbar" aria-label="${temasConcluidos} de ${totalTemas} temas concluídos em ${modulo.titulo}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${porcentagemModulo}">
+            <span class="mini-barra-progresso-preenchimento" style="width: ${porcentagemModulo}%"></span>
+          </span>
         </span>
       </button>
     `;
@@ -142,6 +173,7 @@ function preencherPaginaModulo(modulo) {
   pmTitulo.textContent = modulo.titulo;
   pmDescricao.textContent = modulo.descricao;
   montarMenuDoModulo(modulo);
+  atualizarProgressoDoModulo(modulo);
   document.title = `${modulo.titulo} — ${TITULO_SITE}`;
 }
 
@@ -183,8 +215,87 @@ function preencherPaginaTopico(modulo, indiceTema) {
   document.title = `${tema.titulo} — ${TITULO_SITE}`;
 }
 
+// ===== Ouvir o texto em voz alta =====
+function limparEmojis(texto) {
+  return texto.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{2190}-\u{21FF}\u{2B00}-\u{2BFF}]/gu, "");
+}
+
+function escolherVoz() {
+  if (!window.speechSynthesis) return null;
+  const vozes = speechSynthesis.getVoices();
+  return vozes.find((v) => v.lang && v.lang.toLowerCase().startsWith("pt")) || vozes[0] || null;
+}
+
+function pararLeitura() {
+  if (!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  lendoAgora = false;
+  if (botaoOuvir) {
+    botaoOuvir.textContent = "🔊 Ouvir este texto";
+    botaoOuvir.setAttribute("aria-pressed", "false");
+  }
+  if (botaoPararLeitura) botaoPararLeitura.hidden = true;
+}
+
+function iniciarLeitura(tema) {
+  if (!window.speechSynthesis) {
+    alert("Seu navegador não consegue ler o texto em voz alta.");
+    return;
+  }
+
+  pararLeitura();
+
+  const textos = [tema.titulo, tema.descricao, ...tema.paragrafos].map(limparEmojis);
+  const voz = escolherVoz();
+
+  textos.forEach((texto, indice) => {
+    const fala = new SpeechSynthesisUtterance(texto);
+    fala.lang = "pt-BR";
+    fala.rate = 0.95;
+    if (voz) fala.voice = voz;
+
+    if (indice === textos.length - 1) {
+      fala.onend = pararLeitura;
+    }
+
+    speechSynthesis.speak(fala);
+  });
+
+  lendoAgora = true;
+  if (botaoOuvir) {
+    botaoOuvir.textContent = "⏸️ Pausar leitura";
+    botaoOuvir.setAttribute("aria-pressed", "true");
+  }
+  if (botaoPararLeitura) botaoPararLeitura.hidden = false;
+}
+
+if (botaoOuvir) {
+  botaoOuvir.addEventListener("click", () => {
+    if (!window.speechSynthesis) return;
+
+    if (!speechSynthesis.speaking) {
+      const combinacao = window.location.hash.match(/^#modulo-(\d+)-tema-(\d+)$/);
+      if (!combinacao) return;
+      const modulo = dadosModulos.find((m) => m.numero === Number(combinacao[1]));
+      const tema = modulo && modulo.temas[Number(combinacao[2])];
+      if (tema) iniciarLeitura(tema);
+    } else if (!speechSynthesis.paused) {
+      speechSynthesis.pause();
+      botaoOuvir.textContent = "▶️ Continuar leitura";
+    } else {
+      speechSynthesis.resume();
+      botaoOuvir.textContent = "⏸️ Pausar leitura";
+    }
+  });
+}
+
+if (botaoPararLeitura) {
+  botaoPararLeitura.addEventListener("click", pararLeitura);
+}
+
 // ===== Trocar entre as três páginas =====
 function mostrarPagina(pagina) {
+   pararLeitura();
   paginaInicio.hidden = pagina !== "inicio";
   paginaModulo.hidden = pagina !== "modulo";
   paginaTopico.hidden = pagina !== "topico";
@@ -231,13 +342,22 @@ function voltarParaTrilha(trocarHash = true) {
 
 // Reconstrói a home (checkmarks) quando se volta de um módulo ou tema
 function atualizarTrilha() {
-  caminho.querySelectorAll(".modulo-marca").forEach((marca, indice) => {
+  caminho.querySelectorAll(".modulo").forEach((li, indice) => {
     const modulo = dadosModulos[indice];
+    const marca = li.querySelector(".modulo-marca");
     marca.classList.toggle("concluido", moduloConcluido(modulo));
+
+    const totalTemas = modulo.temas.length;
+    const temasConcluidos = modulo.temas.filter((_, i) => temaConcluido(modulo.numero, i)).length;
+    const porcentagemModulo = Math.round((temasConcluidos / totalTemas) * 100);
+
+    const preenchimento = li.querySelector(".mini-barra-progresso-preenchimento");
+    const barra = li.querySelector(".mini-barra-progresso");
+    if (preenchimento) preenchimento.style.width = `${porcentagemModulo}%`;
+    if (barra) barra.setAttribute("aria-valuenow", porcentagemModulo);
   });
   atualizarProgresso();
 }
-
 // ===== Abre a página certa direto pelo endereço, e faz o botão voltar do navegador funcionar =====
 function tratarHash() {
   const hash = window.location.hash;
@@ -277,6 +397,9 @@ ptConcluir.addEventListener("click", () => {
 
   alternarTemaConcluido(numeroModulo, indiceTema);
   atualizarBotaoConcluirTema(numeroModulo, indiceTema);
+
+  const modulo = dadosModulos.find((m) => m.numero === numeroModulo);
+  if (modulo) atualizarProgressoDoModulo(modulo);
 });
 
 ptProximo.addEventListener("click", (evento) => {
